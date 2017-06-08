@@ -1,0 +1,77 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>NOAA data pool</title>
+    <link rel="stylesheet" href="{% static "css/layout.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "css/forms.css" %}" type="text/css" />
+</head>
+<body id="top">
+<div class="wrapper col1">
+  <div id="topbar">
+    <p> Mail: info@domain.com</p>
+    <ul>
+      <li><a href="#">NCHC</a></li>
+      <li><a href="#">iCAIR</a></li>
+
+      <li class="last"><a href="#">Signin</a></li>
+    </ul>
+    <br class="clear" />
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+<div class="wrapper col2">
+  <div id="header">
+    <div class="fl_left">
+      <h1><a href="index.html">NOAA data</a></h1>
+      <p>https://ncar.ucar.edu/</p>
+    </div>
+
+    <br class="clear" />
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+
+<div class="wrapper col5">
+  <div id="container">
+    <div id="content">
+      <ul>
+
+<h3> Video List</h3>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <select name='select_date' onchange="this.form.submit()">
+            {% for date in mlist %}
+                <option value={{ date }} {% if video_date == date %} selected {% endif %}>{{ date }}</option>
+            {% endfor %}
+        </select>
+</form>
+      <br><br>
+{% if  video_date != None %}
+<h3>Date:{{ video_date }}</h3>
+
+ {#  <img src="/Users/peggy/NCHC_simu/video/{{ video_date }}“> #}
+
+<video width="800" height="600" controls="controls" preload="none">
+
+    {#    <source src="{{MEDIA_URL}}20170515_00.mp4" type="video/mp4"> #}
+    <source src="{% static "media/" %}{{ video_date }}" type="video/mp4">
+</video>
+
+{%  endif %}
+<br>
+   <form action="../download/" method="post" target="_blank">
+       {% csrf_token %}
+    <input type="hidden" name="video_date" value={{video_date}}>
+    <input type="submit" class="btn" value="Download">
+</form>
+      </ul>
+    </div>
+    <br class="clear" />
+  </div>
+</div>
+
+</body>
+</html>
