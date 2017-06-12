@@ -5,12 +5,13 @@ from django.shortcuts import render
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import TemplateView
+from django.conf import settings
 import os
 import sys
 import subprocess
 
 def media_metadata(request):
-    path = "/Users/peggy/PycharmProjects/NOAA/myapp/static/media"  # insert the path to your directory
+    path = settings.MEDIA_ROOT #"/Users/peggy/PycharmProjects/NOAA/myapp/static/media"  # insert the path to your directory
     media_date_list = []
     for filename in os.listdir(path):
         module_name, ext =os.path.splitext(filename)
