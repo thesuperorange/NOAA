@@ -6,11 +6,22 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import TemplateView
 import os
+import sys
 import subprocess
 
 def media_metadata(request):
     path = "/Users/peggy/PycharmProjects/NOAA/myapp/static/media"  # insert the path to your directory
-    media_date_list = os.listdir(path)
+    media_date_list = []
+    for filename in os.listdir(path):
+        module_name, ext =os.path.splitext(filename)
+        if ext == '.mp4':
+            try:
+                media_date_list.append(module_name)
+            except Exception as e:
+                sys.stderr.write('error: %s: %s\n' % (filename, e))
+
+
+
     #media_date_list=['20170105_00','20170115_06','20170205_00']
     date = None
     if request.method == 'POST':
